@@ -1,0 +1,12 @@
+{
+  "network": "X Layer Testnet",
+  "chainId": 1952,
+  "deployedAt": "2026-05-25",
+  "deployer": "0xa4D3859D69B8105D5D24f703AE0f2b168Bb9EeDA",
+  "contracts": {
+    "TestToken":     "0x3Ba2394d0f28dA583D110def321C623d57f3e2C1",
+    "Resolver":      "0xEcCD02be055E36913F434Ca5fFF58d074DBda6Ea",
+    "MarketFactory": "0xB84709d277a3134Fad667D68F5AB18295c1Fae25",
+    "sampleMarket":  "0xa1f36d7479eb4968dE607b95D8e31e93F4d12450"
+  }
+}

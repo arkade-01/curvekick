@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CurveKick — X Banner</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; gap: 24px; }
+  #banner {
+    width: 1500px;
+    height: 500px;
+    background: linear-gradient(135deg, #080C0A 0%, #0A1A10 50%, #0D2818 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 0 80px;
+    transform-origin: top left;
+  }
+  #download {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    background: #00FF6A;
+    color: #080C0A;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  #download:hover { background: #00CC55; }
+  .label { font-family: 'DM Mono', monospace; font-size: 11px; color: #8A9E92; letter-spacing: 0.2em; }
+</style>
+</head>
+<body>
+
+<div class="label">PREVIEW (scaled) — ACTUAL OUTPUT IS 1500 × 500 PX</div>
+
+<div id="banner" style="transform: scale(0.5); margin: -125px -375px;">
+  <!-- BG grid -->
+  <svg style="position:absolute;inset:0;opacity:0.15;pointer-events:none" width="1500" height="500">
+    <line x1="0"    y1="0" x2="0"    y2="500" stroke="#00FF6A" stroke-width="1"/>
+    <line x1="214"  y1="0" x2="214"  y2="500" stroke="#00FF6A" stroke-width="1"/>
+    <line x1="428"  y1="0" x2="428"  y2="500" stroke="#00FF6A" stroke-width="1"/>
+    <line x1="642"  y1="0" x2="642"  y2="500" stroke="#00FF6A" stroke-width="1"/>
+    <line x1="856"  y1="0" x2="856"  y2="500" stroke="#00FF6A" stroke-width="1"/>
+    <line x1="1070" y1="0" x2="1070" y2="500" stroke="#00FF6A" stroke-width="1"/>
+    <line x1="1284" y1="0" x2="1284" y2="500" stroke="#00FF6A" stroke-width="1"/>
+    <line x1="1498" y1="0" x2="1498" y2="500" stroke="#00FF6A" stroke-width="1"/>
+    <line x1="0" y1="0"   x2="1500" y2="0"   stroke="#00FF6A" stroke-width="1"/>
+    <line x1="0" y1="165" x2="1500" y2="165" stroke="#00FF6A" stroke-width="1"/>
+    <line x1="0" y1="330" x2="1500" y2="330" stroke="#00FF6A" stroke-width="1"/>
+    <line x1="0" y1="495" x2="1500" y2="495" stroke="#00FF6A" stroke-width="1"/>
+  </svg>
+
+  <!-- Bonding curve line -->
+  <svg style="position:absolute;inset:0;opacity:0.45;pointer-events:none" width="1500" height="500" viewBox="0 0 1500 500">
+    <path d="M0 400 Q375 350 625 250 Q875 150 1500 50"
+      stroke="#00FF6A" stroke-width="3" fill="none" stroke-dasharray="8 8"/>
+    <circle cx="1500" cy="50" r="8" fill="#00FF6A"/>
+  </svg>
+
+  <!-- Left: logo + name + tagline -->
+  <div style="position:relative;z-index:1;">
+    <div style="display:flex;align-items:center;gap:24px;margin-bottom:16px;">
+      <!-- Logo mark -->
+      <svg width="80" height="80" viewBox="0 0 40 40" fill="none">
+        <rect width="40" height="40" rx="8" fill="#1A3D28"/>
+        <path d="M6 30 Q12 28 18 20 Q24 12 34 10" stroke="#00FF6A" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <circle cx="34" cy="10" r="3.5" fill="#00FF6A"/>
+        <line x1="6" y1="10" x2="6" y2="34" stroke="#2A3D30" stroke-width="0.5"/>
+        <line x1="6" y1="34" x2="34" y2="34" stroke="#2A3D30" stroke-width="0.5"/>
+        <line x1="20" y1="32" x2="20" y2="36" stroke="#8A9E92" stroke-width="0.5"/>
+        <line x1="4" y1="20" x2="8" y2="20" stroke="#8A9E92" stroke-width="0.5"/>
+      </svg>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:88px;letter-spacing:0.08em;color:#F0F5F1;line-height:1;">
+        CURVEKICK
+      </div>
+    </div>
+    <div style="font-family:'DM Mono',monospace;font-size:22px;color:#00FF6A;letter-spacing:0.25em;">
+      WORLD CUP PREDICTION MARKETS · BUILT ON X LAYER
+    </div>
+  </div>
+
+  <!-- Right: stats -->
+  <div style="position:absolute;right:80px;top:50%;transform:translateY(-50%);text-align:right;">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:44px;color:#00FF6A;letter-spacing:0.05em;line-height:1.1;">104 MATCHES</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:44px;color:#FFB800;letter-spacing:0.05em;line-height:1.1;">3 CURVES EACH</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:44px;color:#F0F5F1;letter-spacing:0.05em;line-height:1.1;">TRADE LIVE</div>
+  </div>
+</div>
+
+<button id="download" onclick="downloadBanner()">DOWNLOAD PNG (1500 × 500)</button>
+
+<script>
+async function downloadBanner() {
+  const btn = document.getElementById('download');
+  btn.textContent = 'RENDERING...';
+  btn.disabled = true;
+
+  const el = document.getElementById('banner');
+  // temporarily reset scale for capture
+  el.style.transform = 'none';
+  el.style.margin = '0';
+
+  const canvas = await html2canvas(el, {
+    width: 1500,
+    height: 500,
+    scale: 1,
+    useCORS: true,
+    backgroundColor: null,
+  });
+
+  el.style.transform = 'scale(0.5)';
+  el.style.margin = '-125px -375px';
+
+  const link = document.createElement('a');
+  link.download = 'curvekick-x-banner.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+
+  btn.textContent = 'DOWNLOAD PNG (1500 × 500)';
+  btn.disabled = false;
+}
+</script>
+</body>
+</html>

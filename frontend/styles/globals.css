@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+@import "tailwindcss";
+
+@theme inline {
+  --color-obsidian:    #080C0A;
+  --color-pitch:       #0A1A10;
+  --color-ck-green:    #00FF6A;
+  --color-green-dim:   #00CC55;
+  --color-green-muted: #1A3D28;
+  --color-amber:       #FFB800;
+  --color-danger:      #FF3D3D;
+  --color-ck-white:    #F0F5F1;
+  --color-grey-400:    #8A9E92;
+  --color-grey-600:    #2A3D30;
+  --color-grey-700:    #1A2E22;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+
+  --animate-flash-up:   flash-up 0.6s ease-out forwards;
+  --animate-flash-down: flash-down 0.6s ease-out forwards;
+  --animate-ticker:     ticker 30s linear infinite;
+  --animate-pulse-dot:  pulse-dot 1.5s ease-in-out infinite;
+  --animate-slide-in:   slide-in 0.3s ease-out;
+  --animate-card-in:    card-in 0.4s ease-out forwards;
+}
+
+@keyframes flash-up {
+  0%   { color: #00FF6A; text-shadow: 0 0 8px #00FF6A; }
+  100% { color: #F0F5F1; text-shadow: none; }
+}
+
+@keyframes flash-down {
+  0%   { color: #FF3D3D; text-shadow: 0 0 8px #FF3D3D; }
+  100% { color: #F0F5F1; text-shadow: none; }
+}
+
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.8); }
+}
+
+@keyframes slide-in {
+  0%   { transform: translateY(-100%); opacity: 0; }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes card-in {
+  0%   { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+body {
+  background: #080C0A;
+  color: #F0F5F1;
+  font-family: 'DM Mono', monospace;
+}
+
+/* Scanline texture overlay */
+.scanlines::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}

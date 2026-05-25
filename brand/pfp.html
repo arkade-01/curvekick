@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CurveKick — X Avatar</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; gap: 24px; }
+  #avatar {
+    width: 400px;
+    height: 400px;
+    background: #080C0A;
+    border-radius: 0; /* square for export; X crops to circle */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .preview-ring {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 400px;
+    height: 400px;
+  }
+  #download {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    background: #00FF6A;
+    color: #080C0A;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  #download:hover { background: #00CC55; }
+  .label { font-family: 'DM Mono', monospace; font-size: 11px; color: #8A9E92; letter-spacing: 0.2em; }
+  .note { font-family: 'DM Mono', monospace; font-size: 10px; color: #2A3D30; letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+
+<div class="label">X AVATAR — 400 × 400 PX (X crops to circle)</div>
+
+<div class="preview-ring">
+  <div id="avatar">
+    <!-- subtle radial glow -->
+    <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, #1A3D28 0%, #080C0A 70%);"></div>
+
+    <!-- logo mark at 240px (fills the circle comfortably) -->
+    <svg style="position:relative;z-index:1;" width="240" height="240" viewBox="0 0 40 40" fill="none">
+      <rect width="40" height="40" rx="8" fill="#1A3D28"/>
+      <path d="M6 30 Q12 28 18 20 Q24 12 34 10"
+        stroke="#00FF6A" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      <circle cx="34" cy="10" r="3.5" fill="#00FF6A"/>
+      <line x1="6" y1="10" x2="6" y2="34" stroke="#2A3D30" stroke-width="0.5"/>
+      <line x1="6" y1="34" x2="34" y2="34" stroke="#2A3D30" stroke-width="0.5"/>
+      <line x1="20" y1="32" x2="20" y2="36" stroke="#8A9E92" stroke-width="0.5"/>
+      <line x1="4"  y1="20" x2="8"  y2="20" stroke="#8A9E92" stroke-width="0.5"/>
+    </svg>
+  </div>
+</div>
+
+<button id="download" onclick="downloadPfp()">DOWNLOAD PNG (400 × 400)</button>
+<div class="note">Upload the square PNG — X will handle the circle crop</div>
+
+<script>
+async function downloadPfp() {
+  const btn = document.getElementById('download');
+  btn.textContent = 'RENDERING...';
+  btn.disabled = true;
+
+  const canvas = await html2canvas(document.getElementById('avatar'), {
+    width: 400,
+    height: 400,
+    scale: 1,
+    useCORS: true,
+    backgroundColor: '#080C0A',
+  });
+
+  const link = document.createElement('a');
+  link.download = 'curvekick-avatar.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+
+  btn.textContent = 'DOWNLOAD PNG (400 × 400)';
+  btn.disabled = false;
+}
+</script>
+</body>
+</html>

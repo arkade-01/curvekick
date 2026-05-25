@@ -1,0 +1,19 @@
+app = "curvekick-listener"
+primary_region = "lhr"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  POLL_INTERVAL_MS = "60000"
+
+[[services]]
+  auto_stop_machines  = false
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [[services.checks]]
+    type     = "tcp"
+    interval = "15s"
+    timeout  = "2s"
+    port     = 8080
