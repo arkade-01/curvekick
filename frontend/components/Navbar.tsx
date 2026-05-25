@@ -1,12 +1,22 @@
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { usePrivy } from "@privy-io/react-auth";
-import { useReadContract } from "wagmi";
-import { useAccount } from "wagmi";
-import { FACTORY_ADDRESS, FACTORY_ABI } from "@/lib/contracts";
+import { useReadContract, useAccount } from "wagmi";
+import { FACTORY_ADDRESS, FACTORY_ABI, TOKEN_ADDRESS, TOKEN_ABI, TOKEN_SYMBOL } from "@/lib/contracts";
 
-function ConnectButton() {
+function WalletWidget() {
   const { login, logout, authenticated, ready, user } = usePrivy();
+  const { address: userAddress } = useAccount();
+  const [copied, setCopied] = useState(false);
+
+  const { data: balance } = useReadContract({
+    address: TOKEN_ADDRESS,
+    abi: TOKEN_ABI,
+    functionName: "balanceOf",
+    args: [userAddress ?? "0x0000000000000000000000000000000000000000"],
+    query: { enabled: !!userAddress, refetchInterval: 15_000 },
+  });
 
   if (!ready) return null;
 
@@ -26,27 +36,61 @@ function ConnectButton() {
     );
   }
 
-  // Show address from linked wallet or embedded wallet
-  const wallet = user?.wallet;
-  const addr = wallet?.address ?? "";
+  const addr = user?.wallet?.address ?? "";
   const short = addr ? `${addr.slice(0, 6)}...${addr.slice(-4)}` : "Connected";
+  const balNum = balance ? (Number(balance as bigint) / 1e18).toFixed(2) : "—";
+
+  function copyAddress() {
+    if (!addr) return;
+    navigator.clipboard.writeText(addr);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  }
 
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-      <span style={{ fontSize: 11, color: "#00FF6A", fontFamily: "'DM Mono', monospace", letterSpacing: "0.05em" }}>
-        {short}
-      </span>
+      {/* Balance chip */}
+      <div style={{
+        background: "#0A1A10", border: "1px solid #2A3D30", borderRadius: 6,
+        padding: "5px 10px", display: "flex", alignItems: "center", gap: 6,
+      }}>
+        <span style={{ fontSize: 10, color: "#8A9E92", fontFamily: "'DM Mono', monospace" }}>{TOKEN_SYMBOL}</span>
+        <span style={{ fontSize: 11, color: "#00FF6A", fontFamily: "'DM Mono', monospace", fontWeight: 500 }}>{balNum}</span>
+      </div>
+
+      {/* Address + copy */}
+      <button
+        onClick={copyAddress}
+        title={copied ? "Copied!" : addr}
+        style={{
+          background: "#0A1A10", border: "1px solid #2A3D30", borderRadius: 6,
+          padding: "5px 10px", display: "flex", alignItems: "center", gap: 6,
+          cursor: "pointer", fontFamily: "'DM Mono', monospace",
+        }}
+      >
+        <span style={{ fontSize: 11, color: copied ? "#00FF6A" : "#F0F5F1", letterSpacing: "0.05em" }}>
+          {copied ? "COPIED ✓" : short}
+        </span>
+        {!copied && (
+          <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+            <rect x="5" y="5" width="9" height="9" rx="1.5" stroke="#8A9E92" strokeWidth="1.5"/>
+            <path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5" stroke="#8A9E92" strokeWidth="1.5" strokeLinecap="round"/>
+          </svg>
+        )}
+      </button>
+
+      {/* Disconnect */}
       <button
         onClick={logout}
         style={{
           background: "none", color: "#8A9E92",
           border: "1px solid #2A3D30", borderRadius: 6,
-          padding: "6px 12px", fontSize: 10,
+          padding: "5px 10px", fontSize: 10,
           fontFamily: "'DM Mono', monospace", letterSpacing: "0.1em",
           cursor: "pointer",
         }}
       >
-        DISCONNECT
+        ✕
       </button>
     </div>
   );
@@ -103,7 +147,7 @@ export default function Navbar() {
 
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <span style={{ fontSize: 9, color: "#2A3D30", letterSpacing: "0.15em" }}>X LAYER TESTNET</span>
-        <ConnectButton />
+        <WalletWidget />
       </div>
     </nav>
   );
