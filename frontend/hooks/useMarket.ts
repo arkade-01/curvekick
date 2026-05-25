@@ -52,6 +52,13 @@ export function useMarket(address: `0x${string}` | undefined) {
   const supplies = [Number(s[1]), Number(s[3]), Number(s[5])];
   const raisedOkb = raised?.map(r => r?.result ? (Number(r.result as bigint) / 1e18).toFixed(4) + " CKUSD" : "0 CKUSD") ?? ["0 CKUSD","0 CKUSD","0 CKUSD"];
 
+  // Sum curve raised amounts for live pool (totalPool contract var is only set post-resolution)
+  const totalFromCurves = raised
+    ? raised.reduce((sum, r) => sum + (r?.result ? Number(r.result as bigint) : 0), 0) / 1e18
+    : 0;
+  const resolvedPool = totalPool ? Number(totalPool as bigint) / 1e18 : 0;
+  const poolDisplay = (resolvedPool > 0 ? resolvedPool : totalFromCurves).toFixed(4);
+
   // Actual price change from market open: price(0) = BASE_PRICE, price(now) = BASE_PRICE + SLOPE*supply
   const changes = prices.map(p => BASE_PRICE > 0 ? ((p - BASE_PRICE) / BASE_PRICE) * 100 : 0);
 
@@ -75,7 +82,7 @@ export function useMarket(address: `0x${string}` | undefined) {
     matchTime:       Number(matchTime as bigint),
     isResolved:      s[6],
     resolvedOutcome: s[7],
-    totalPool:       totalPool ? (Number(totalPool as bigint) / 1e18).toFixed(4) : "0",
+    totalPool:       poolDisplay,
     curves:          curvesData as MarketDetail["curves"],
     curveAddresses:  curveAddrs as [`0x${string}`,`0x${string}`,`0x${string}`],
   };

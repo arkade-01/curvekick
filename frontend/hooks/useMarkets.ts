@@ -1,5 +1,10 @@
 import { useReadContract, useReadContracts } from "wagmi";
-import { FACTORY_ADDRESS, FACTORY_ABI, MARKET_ABI, parseMatchId } from "@/lib/contracts";
+import { FACTORY_ADDRESS, FACTORY_ABI, MARKET_ABI, parseMatchId, BASE_PRICE, SLOPE } from "@/lib/contracts";
+
+// Integral of linear bonding curve: BASE*n + SLOPE*n*(n+1)/2
+function curveRaised(supply: number): number {
+  return BASE_PRICE * supply + (SLOPE * supply * (supply + 1)) / 2;
+}
 
 export interface MarketInfo {
   address: `0x${string}`;
@@ -72,7 +77,7 @@ export function useMarkets() {
       homeSupply: Number(state[1]),
       drawSupply: Number(state[3]),
       awaySupply: Number(state[5]),
-      totalPool: "—",
+      totalPool: (curveRaised(Number(state[1])) + curveRaised(Number(state[3])) + curveRaised(Number(state[5]))).toFixed(2),
       isResolved,
       resolvedOutcome: state[7],
     } satisfies MarketInfo;
