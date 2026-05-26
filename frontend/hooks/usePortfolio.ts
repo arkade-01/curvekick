@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useReadContracts, usePublicClient, useAccount } from "wagmi";
 import { parseAbiItem, type PublicClient } from "viem";
-import { MARKET_ABI, CURVE_ABI } from "@/lib/contracts";
+import { MARKET_ABI, CURVE_ABI, BASE_PRICE, SLOPE } from "@/lib/contracts";
 
 // X Layer testnet caps eth_getLogs at 100 blocks per request.
 // Fetch in 100-block chunks, 20 concurrent at a time.
@@ -145,10 +145,26 @@ export function usePortfolio() {
         const balance = balanceData[idx]?.result as bigint | undefined;
         if (!balance || balance === 0n) return;
 
-        const priceKeys = ["homePrice", "drawPrice", "awayPrice"] as const;
-        const currentPrice  = parseFloat(market[priceKeys[o]]);
-        const currentValue  = Number(balance) * currentPrice;
-        const curveAddress  = curveAddrs[idx];
+        const priceKeys  = ["homePrice",  "drawPrice",  "awayPrice" ] as const;
+        const supplyKeys = ["homeSupply", "drawSupply", "awaySupply"] as const;
+        const currentPrice = parseFloat(market[priceKeys[o]]);
+        const supply       = market[supplyKeys[o]];
+        const shares       = Number(balance);
+        const curveAddress = curveAddrs[idx];
+
+        let currentValue: number;
+        if (market.isResolved && market.resolvedOutcome === o) {
+          // Winning outcome: expected claim payout = share of total pool
+          currentValue = supply > 0
+            ? (shares / supply) * parseFloat(market.totalPool)
+            : 0;
+        } else if (market.isResolved) {
+          // Losing outcome: sell is blocked, shares have no value
+          currentValue = 0;
+        } else {
+          // Live market: what you'd receive selling now (integral going back down the curve)
+          currentValue = BASE_PRICE * shares + SLOPE * shares * (2 * supply - shares) / 2;
+        }
 
         const netInvested = costMap.has(curveAddress) ? costMap.get(curveAddress)! : null;
         const pnl         = netInvested !== null ? currentValue - netInvested : null;

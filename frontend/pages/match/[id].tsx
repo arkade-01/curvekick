@@ -44,22 +44,22 @@ export default function MatchPage() {
           </button>
 
           {/* Match header */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 20, marginBottom: 32 }}>
+          <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", alignItems: isMobile ? "flex-start" : "flex-start", gap: 16, marginBottom: 32 }}>
             <div>
               <div style={{ marginBottom: 10 }}>
                 <OutcomeBadge status={status} result={isResolved ? (market.resolvedOutcome as 0 | 1 | 2) : undefined} />
               </div>
-              <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 52, letterSpacing: "0.04em", lineHeight: 1, color: "#F0F5F1", margin: 0 }}>
+              <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: isMobile ? 36 : 52, letterSpacing: "0.04em", lineHeight: 1.05, color: "#F0F5F1", margin: 0 }}>
                 {market.homeTeam}
-                <span style={{ fontSize: 28, color: "#2A3D30", margin: "0 16px" }}>VS</span>
+                <span style={{ fontSize: isMobile ? 18 : 28, color: "#2A3D30", margin: "0 12px" }}>VS</span>
                 {market.awayTeam}
               </h1>
             </div>
-            <div style={{ textAlign: "right" }}>
+            <div style={{ textAlign: isMobile ? "left" : "right" }}>
               <div style={{ fontSize: 10, color: "#8A9E92", letterSpacing: "0.15em", marginBottom: 6 }}>
                 {isResolved ? "FINAL" : "KICKOFF IN"}
               </div>
-              {!isResolved && <CountdownTimer targetTime={market.matchTime} style={{ fontSize: 22, color: "#F0F5F1" }} />}
+              {!isResolved && <CountdownTimer targetTime={market.matchTime} style={{ fontSize: isMobile ? 18 : 22, color: "#F0F5F1" }} />}
               <div style={{ marginTop: 8, fontSize: 13, color: "#F0F5F1" }}>
                 <span style={{ color: "#8A9E92", fontSize: 10 }}>POOL </span>{market.totalPool} CKUSD
               </div>

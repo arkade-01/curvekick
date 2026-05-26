@@ -4,6 +4,7 @@ import { useAccount, useReadContract, useWriteContract, useWaitForTransactionRec
 import { usePrivy } from "@privy-io/react-auth";
 import Navbar from "@/components/Navbar";
 import { TOKEN_ABI, TOKEN_ADDRESS, TOKEN_SYMBOL } from "@/lib/contracts";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const FAUCET_AMOUNT = 1_000;
 const COOLDOWN_HOURS = 24;
@@ -11,6 +12,7 @@ const COOLDOWN_HOURS = 24;
 export default function FaucetPage() {
   const { authenticated, login } = usePrivy();
   const { address: userAddress } = useAccount();
+  const isMobile = useIsMobile();
 
   const { data: nextClaim, refetch: refetchNext } = useReadContract({
     address: TOKEN_ADDRESS,
@@ -55,12 +57,12 @@ export default function FaucetPage() {
       <div style={{ minHeight: "100vh", background: "#050E08", color: "#F0F5F1", fontFamily: "'DM Mono', monospace" }}>
         <Navbar />
 
-        <div style={{ maxWidth: 520, margin: "60px auto", padding: "0 24px" }}>
+        <div style={{ maxWidth: 520, margin: isMobile ? "32px auto" : "60px auto", padding: "0 20px" }}>
 
           {/* Header */}
           <div style={{ textAlign: "center", marginBottom: 40 }}>
             <div style={{ fontSize: 10, color: "#00FF6A", letterSpacing: "0.3em", marginBottom: 12 }}>TESTNET</div>
-            <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 52, letterSpacing: "0.05em", color: "#F0F5F1", margin: "0 0 12px", lineHeight: 1 }}>
+            <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: isMobile ? 40 : 52, letterSpacing: "0.05em", color: "#F0F5F1", margin: "0 0 12px", lineHeight: 1 }}>
               {TOKEN_SYMBOL} FAUCET
             </h1>
             <p style={{ fontSize: 13, color: "#8A9E92", lineHeight: 1.7, margin: 0 }}>
