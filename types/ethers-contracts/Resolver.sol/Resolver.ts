@@ -6,15 +6,17 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
   
 
   export interface ResolverInterface extends Interface {
-    getFunction(nameOrSignature: "admin" | "resolve"): FunctionFragment;
+    getFunction(nameOrSignature: "admin" | "resolve" | "transferAdmin"): FunctionFragment;
 
     getEvent(nameOrSignatureOrTopic: "Resolved"): EventFragment;
 
     encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
 encodeFunctionData(functionFragment: 'resolve', values: [AddressLike, BigNumberish]): string;
+encodeFunctionData(functionFragment: 'transferAdmin', values: [AddressLike]): string;
 
     decodeFunctionResult(functionFragment: 'admin', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'resolve', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'transferAdmin', data: BytesLike): Result;
   }
 
   
@@ -79,6 +81,14 @@ decodeFunctionResult(functionFragment: 'resolve', data: BytesLike): Result;
     >
     
 
+    
+    transferAdmin: TypedContractMethod<
+      [newAdmin: AddressLike, ],
+      [void],
+      'nonpayable'
+    >
+    
+
 
     getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
 
@@ -89,6 +99,11 @@ decodeFunctionResult(functionFragment: 'resolve', data: BytesLike): Result;
     >;
 getFunction(nameOrSignature: 'resolve'): TypedContractMethod<
       [market: AddressLike, outcome: BigNumberish, ],
+      [void],
+      'nonpayable'
+    >;
+getFunction(nameOrSignature: 'transferAdmin'): TypedContractMethod<
+      [newAdmin: AddressLike, ],
       [void],
       'nonpayable'
     >;

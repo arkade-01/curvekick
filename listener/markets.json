@@ -2,5 +2,85 @@
   "0xa1f36d7479eb4968dE607b95D8e31e93F4d12450": {
     "fixtureId": 1035135,
     "matchId": "BRAZ-FRA-01"
+  },
+  "0x5f768a211032d76313544b355676450b8e7f771d": {
+    "fixtureId": null,
+    "matchId": "BRAZ-ARG-01"
+  },
+  "0xdbccdf02ea39d5595a09ab3b86dfc6d2ddf99069": {
+    "fixtureId": null,
+    "matchId": "ENG-FRA-02"
+  },
+  "0x6ecf61d61896a416f30ed84f58046da6c0a89c57": {
+    "fixtureId": null,
+    "matchId": "GER-ESP-03"
+  },
+  "0x4bc50197fed7fdda0e2dc6baf76e5cdfa85b78ac": {
+    "fixtureId": null,
+    "matchId": "POR-ITA-04"
+  },
+  "0xa75aab890ef847a9240e6d491bcc296d36760e2f": {
+    "fixtureId": null,
+    "matchId": "NED-BEL-05"
+  },
+  "0x4fc4b745cc0581826eecbb26862e9dd419f8ea27": {
+    "fixtureId": null,
+    "matchId": "MEX-USA-06"
+  },
+  "0xcbae75caef3ff39518ffa68a7748966ad733f801": {
+    "fixtureId": null,
+    "matchId": "JPN-KOR-07"
+  },
+  "0x3a09acbd25a9cfecf1f46a30288ab0b2af9aa49e": {
+    "fixtureId": null,
+    "matchId": "MAR-SEN-08"
+  },
+  "0xd0f39fcea2c20231d1e12556b67ce2ab067bd380": {
+    "fixtureId": null,
+    "matchId": "URU-CHI-09"
+  },
+  "0x9a2514e9578da399c86638bc71099e7f9e4d2c32": {
+    "fixtureId": null,
+    "matchId": "CRO-NED-10"
+  },
+  "0x9e15f24d49f21ab1a0d23fac4fb977e7564f45dc": {
+    "fixtureId": null,
+    "matchId": "ARG-FRA-11"
+  },
+  "0xc761da7e4fea65f77c20f04ec45714567025a55a": {
+    "fixtureId": null,
+    "matchId": "BRAZ-ENG-12"
+  },
+  "0x18f53bbec62e15f35b3f3fffd3e0666f6381f530": {
+    "fixtureId": null,
+    "matchId": "ESP-POR-13"
+  },
+  "0x46e18530e3c97ea9e75a805cb1aa55b582f5642a": {
+    "fixtureId": null,
+    "matchId": "GER-ITA-14"
+  },
+  "0x332473bc78730b6194195ad54cf49b858f8bdf18": {
+    "fixtureId": null,
+    "matchId": "NGA-GHA-15"
+  },
+  "0x6d1909aadfce7426eca01fcb9569a7d455e685c7": {
+    "fixtureId": null,
+    "matchId": "ARG-ENG-16"
+  },
+  "0xef364d8e21483ce6667e155181bc65ba9ae570a7": {
+    "fixtureId": null,
+    "matchId": "BRAZ-FRA-17"
+  },
+  "0x07f0baa8e96b84eaf2acfb83079062a00d47b993": {
+    "fixtureId": null,
+    "matchId": "GER-POR-18"
+  },
+  "0x7ff0ab50ce47b5a3acef885df55e5c304f2aad60": {
+    "fixtureId": null,
+    "matchId": "BEL-ESP-19"
+  },
+  "0x81b3e2b380e7eaa836b4cebf46f646b21acd9456": {
+    "fixtureId": null,
+    "matchId": "ITA-NED-20"
   }
 }

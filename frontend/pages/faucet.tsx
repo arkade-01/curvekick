@@ -150,8 +150,32 @@ export default function FaucetPage() {
             )}
           </div>
 
+          {/* OKB gas faucet */}
+          <div style={{ marginTop: 20, padding: "14px 18px", background: "#080C0A", border: "1px solid #1A2E22", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+            <div>
+              <div style={{ fontSize: 10, color: "#8A9E92", letterSpacing: "0.15em", marginBottom: 4 }}>NEED GAS?</div>
+              <div style={{ fontSize: 12, color: "#8A9E92", lineHeight: 1.5 }}>
+                You also need a small amount of <span style={{ color: "#F0F5F1" }}>OKB</span> to pay transaction fees on X Layer.
+              </div>
+            </div>
+            <a
+              href="https://web3.okx.com/xlayer/faucet"
+              target="_blank"
+              rel="noreferrer"
+              style={{
+                flexShrink: 0, padding: "9px 16px", fontSize: 11,
+                fontFamily: "'DM Mono', monospace", letterSpacing: "0.1em", fontWeight: 500,
+                background: "transparent", color: "#00FF6A",
+                border: "1px solid #00FF6A44", borderRadius: 6,
+                textDecoration: "none", whiteSpace: "nowrap",
+              }}
+            >
+              GET OKB →
+            </a>
+          </div>
+
           {/* Instructions */}
-          <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 12 }}>
+          <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 12 }}>
             {[
               ["1", "Claim CKUSD from the faucet above"],
               ["2", "Go to Markets and pick a match"],

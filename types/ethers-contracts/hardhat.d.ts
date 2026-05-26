@@ -11,29 +11,29 @@ import * as Contracts from "./index.js";
 declare module "@nomicfoundation/hardhat-ethers/types" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
   getContractFactory(name: 'BondingCurve', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.BondingCurve__factory>
-getContractFactory(name: 'MatchMarket', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.MatchMarket__factory>
 getContractFactory(name: 'MarketFactory', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.MarketFactory__factory>
+getContractFactory(name: 'MatchMarket', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.MatchMarket__factory>
 getContractFactory(name: 'IMatchMarket', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.IMatchMarket__factory>
 getContractFactory(name: 'Resolver', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.Resolver__factory>
 getContractFactory(name: 'TestToken', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.TestToken__factory>
 
   getContractAt(name: 'BondingCurve', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.BondingCurve>
-getContractAt(name: 'MatchMarket', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.MatchMarket>
 getContractAt(name: 'MarketFactory', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.MarketFactory>
+getContractAt(name: 'MatchMarket', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.MatchMarket>
 getContractAt(name: 'IMatchMarket', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.IMatchMarket>
 getContractAt(name: 'Resolver', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.Resolver>
 getContractAt(name: 'TestToken', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.TestToken>
 
   deployContract(name: 'BondingCurve', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.BondingCurve>
-deployContract(name: 'MatchMarket', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.MatchMarket>
 deployContract(name: 'MarketFactory', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.MarketFactory>
+deployContract(name: 'MatchMarket', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.MatchMarket>
 deployContract(name: 'IMatchMarket', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IMatchMarket>
 deployContract(name: 'Resolver', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.Resolver>
 deployContract(name: 'TestToken', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.TestToken>
 
   deployContract(name: 'BondingCurve', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.BondingCurve>
-deployContract(name: 'MatchMarket', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.MatchMarket>
 deployContract(name: 'MarketFactory', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.MarketFactory>
+deployContract(name: 'MatchMarket', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.MatchMarket>
 deployContract(name: 'IMatchMarket', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IMatchMarket>
 deployContract(name: 'Resolver', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.Resolver>
 deployContract(name: 'TestToken', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.TestToken>

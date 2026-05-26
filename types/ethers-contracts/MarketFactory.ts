@@ -6,7 +6,7 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
   
 
   export interface MarketFactoryInterface extends Interface {
-    getFunction(nameOrSignature: "admin" | "createMarket" | "getAllMarkets" | "getMarket" | "marketAdmin" | "token"): FunctionFragment;
+    getFunction(nameOrSignature: "admin" | "createMarket" | "getAllMarkets" | "getMarket" | "marketAdmin" | "token" | "transferAdmin"): FunctionFragment;
 
     getEvent(nameOrSignatureOrTopic: "MarketCreated"): EventFragment;
 
@@ -16,6 +16,7 @@ encodeFunctionData(functionFragment: 'getAllMarkets', values?: undefined): strin
 encodeFunctionData(functionFragment: 'getMarket', values: [string]): string;
 encodeFunctionData(functionFragment: 'marketAdmin', values?: undefined): string;
 encodeFunctionData(functionFragment: 'token', values?: undefined): string;
+encodeFunctionData(functionFragment: 'transferAdmin', values: [AddressLike]): string;
 
     decodeFunctionResult(functionFragment: 'admin', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'createMarket', data: BytesLike): Result;
@@ -23,6 +24,7 @@ decodeFunctionResult(functionFragment: 'getAllMarkets', data: BytesLike): Result
 decodeFunctionResult(functionFragment: 'getMarket', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'marketAdmin', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'token', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'transferAdmin', data: BytesLike): Result;
   }
 
   
@@ -119,6 +121,14 @@ decodeFunctionResult(functionFragment: 'token', data: BytesLike): Result;
     >
     
 
+    
+    transferAdmin: TypedContractMethod<
+      [newAdmin: AddressLike, ],
+      [void],
+      'nonpayable'
+    >
+    
+
 
     getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
 
@@ -151,6 +161,11 @@ getFunction(nameOrSignature: 'token'): TypedContractMethod<
       [],
       [string],
       'view'
+    >;
+getFunction(nameOrSignature: 'transferAdmin'): TypedContractMethod<
+      [newAdmin: AddressLike, ],
+      [void],
+      'nonpayable'
     >;
 
     getEvent(key: 'MarketCreated'): TypedContractEvent<MarketCreatedEvent.InputTuple, MarketCreatedEvent.OutputTuple, MarketCreatedEvent.OutputObject>;
