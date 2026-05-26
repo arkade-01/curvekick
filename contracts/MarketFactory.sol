@@ -24,6 +24,11 @@ contract MarketFactory {
         token       = _token;
     }
 
+    function transferAdmin(address newAdmin) external onlyAdmin {
+        require(newAdmin != address(0), "zero address");
+        admin = newAdmin;
+    }
+
     function createMarket(string calldata matchId, uint256 matchTime)
         external
         onlyAdmin

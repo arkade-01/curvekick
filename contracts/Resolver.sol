@@ -25,6 +25,11 @@ contract Resolver {
         admin = _admin;
     }
 
+    function transferAdmin(address newAdmin) external onlyAdmin {
+        require(newAdmin != address(0), "zero address");
+        admin = newAdmin;
+    }
+
     // Cannot resolve before matchTime + 90 minutes.
     function resolve(address market, uint8 outcome) external onlyAdmin {
         IMatchMarket m = IMatchMarket(market);

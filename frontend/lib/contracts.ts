@@ -30,11 +30,12 @@ export const TOKEN_ABI = [
 ] as const;
 
 export const FACTORY_ABI = [
-  { inputs: [],                                                                                                  name: "getAllMarkets", outputs: [{ type: "address[]" }], stateMutability: "view",       type: "function" },
-  { inputs: [],                                                                                                  name: "admin",        outputs: [{ type: "address" }],   stateMutability: "view",       type: "function" },
-  { inputs: [],                                                                                                  name: "token",        outputs: [{ type: "address" }],   stateMutability: "view",       type: "function" },
-  { inputs: [{ name: "matchId", type: "string" }],                                                              name: "getMarket",    outputs: [{ type: "address" }],   stateMutability: "view",       type: "function" },
-  { inputs: [{ name: "matchId", type: "string" }, { name: "matchTime", type: "uint256" }],                     name: "createMarket", outputs: [{ type: "address" }],   stateMutability: "nonpayable", type: "function" },
+  { inputs: [],                                                                                                  name: "getAllMarkets",  outputs: [{ type: "address[]" }], stateMutability: "view",       type: "function" },
+  { inputs: [],                                                                                                  name: "admin",         outputs: [{ type: "address" }],   stateMutability: "view",       type: "function" },
+  { inputs: [],                                                                                                  name: "token",         outputs: [{ type: "address" }],   stateMutability: "view",       type: "function" },
+  { inputs: [{ name: "matchId", type: "string" }],                                                              name: "getMarket",     outputs: [{ type: "address" }],   stateMutability: "view",       type: "function" },
+  { inputs: [{ name: "matchId", type: "string" }, { name: "matchTime", type: "uint256" }],                     name: "createMarket",  outputs: [{ type: "address" }],   stateMutability: "nonpayable", type: "function" },
+  { inputs: [{ name: "newAdmin", type: "address" }],                                                            name: "transferAdmin", outputs: [],                      stateMutability: "nonpayable", type: "function" },
   { anonymous: false, inputs: [{ indexed: true, name: "market", type: "address" }, { indexed: false, name: "matchId", type: "string" }, { indexed: false, name: "matchTime", type: "uint256" }], name: "MarketCreated", type: "event" },
 ] as const;
 

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 import Navbar from "@/components/Navbar";
 import { FACTORY_ADDRESS, FACTORY_ABI } from "@/lib/contracts";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const TEAM_CODES = [
   "BRAZ","FRA","ARG","ENG","GER","ESP","POR","ITA",
@@ -39,6 +40,7 @@ const labelStyle = {
 
 export default function AdminPage() {
   const { address: userAddress, isConnected } = useAccount();
+  const isMobile = useIsMobile();
 
   const { data: adminAddress } = useReadContract({
     address: FACTORY_ADDRESS,
@@ -54,6 +56,7 @@ export default function AdminPage() {
   const [kickoffDate, setKickoffDate] = useState("");
   const [kickoffTime, setKickoffTime] = useState("18:00");
   const [error, setError] = useState("");
+  const [newAdminAddr, setNewAdminAddr] = useState("");
 
   const matchId = `${homeCode}-${awayCode}-${matchNum}`;
 
@@ -61,8 +64,11 @@ export default function AdminPage() {
     ? Math.floor(new Date(`${kickoffDate}T${kickoffTime}:00Z`).getTime() / 1000)
     : 0;
 
-  const { writeContract, data: txHash, isPending, error: writeError } = useWriteContract();
+  const { writeContract, data: txHash, isPending, error: writeError, reset } = useWriteContract();
   const { isLoading: isConfirming, isSuccess, data: receipt } = useWaitForTransactionReceipt({ hash: txHash });
+
+  const { writeContract: writeTransfer, data: transferHash, isPending: transferPending, isSuccess: transferSuccess } = useWriteContract();
+  const { isLoading: transferConfirming } = useWaitForTransactionReceipt({ hash: transferHash });
 
   function handleCreate() {
     setError("");
@@ -83,10 +89,10 @@ export default function AdminPage() {
       <Head><title>Admin — CurveKick</title></Head>
       <div style={{ minHeight: "100vh", background: "#080C0A" }}>
         <Navbar />
-        <main style={{ maxWidth: 640, margin: "0 auto", padding: "48px 24px" }}>
+        <main style={{ maxWidth: 640, margin: "0 auto", padding: isMobile ? "24px 16px" : "48px 24px" }}>
           <div style={{ marginBottom: 40 }}>
             <div style={{ fontSize: 10, color: "#00FF6A", letterSpacing: "0.2em", marginBottom: 8 }}>ADMIN</div>
-            <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 48, color: "#F0F5F1", margin: 0, letterSpacing: "0.04em" }}>
+            <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: isMobile ? 36 : 48, color: "#F0F5F1", margin: 0, letterSpacing: "0.04em" }}>
               CREATE MARKET
             </h1>
           </div>
@@ -104,6 +110,40 @@ export default function AdminPage() {
               <div style={{ fontSize: 11, color: "#8A9E92" }}>
                 Connected: {userAddress?.slice(0, 6)}...{userAddress?.slice(-4)}<br />
                 Admin: {adminAddress ? `${(adminAddress as string).slice(0, 6)}...${(adminAddress as string).slice(-4)}` : "loading..."}
+              </div>
+            </div>
+          )}
+
+          {isAdmin && (
+            <div style={{ background: "#0A1A10", border: "1px solid #1A2E22", borderRadius: 10, padding: 24, marginBottom: 24 }}>
+              <div style={{ fontSize: 10, color: "#8A9E92", letterSpacing: "0.2em", marginBottom: 16 }}>TRANSFER ADMIN</div>
+              {transferSuccess ? (
+                <div style={{ fontSize: 12, color: "#00FF6A", letterSpacing: "0.1em" }}>✓ Admin transferred</div>
+              ) : (
+                <div style={{ display: "flex", gap: 10, flexDirection: isMobile ? "column" : "row" }}>
+                  <input
+                    value={newAdminAddr}
+                    onChange={e => setNewAdminAddr(e.target.value)}
+                    placeholder="0x new admin address"
+                    style={{ ...inputStyle, flex: 1, fontSize: 12 }}
+                  />
+                  <button
+                    disabled={!newAdminAddr.startsWith("0x") || newAdminAddr.length !== 42 || transferPending || transferConfirming}
+                    onClick={() => writeTransfer({ address: FACTORY_ADDRESS, abi: FACTORY_ABI, functionName: "transferAdmin", args: [newAdminAddr as `0x${string}`] })}
+                    style={{
+                      padding: "10px 20px", fontSize: 11, fontFamily: "'DM Mono', monospace",
+                      letterSpacing: "0.1em", fontWeight: 500, borderRadius: 6, border: "none",
+                      background: transferPending || transferConfirming ? "#1A2E22" : "#FFB800",
+                      color: transferPending || transferConfirming ? "#8A9E92" : "#080C0A",
+                      cursor: "pointer", whiteSpace: "nowrap",
+                    }}
+                  >
+                    {transferPending || transferConfirming ? "TRANSFERRING..." : "TRANSFER"}
+                  </button>
+                </div>
+              )}
+              <div style={{ fontSize: 10, color: "#8A9E92", marginTop: 10 }}>
+                Current admin: <span style={{ color: "#F0F5F1" }}>{adminAddress ? `${(adminAddress as string).slice(0, 10)}...${(adminAddress as string).slice(-6)}` : "loading"}</span>
               </div>
             </div>
           )}
@@ -134,7 +174,7 @@ export default function AdminPage() {
               ) : (
                 <>
                   {/* Teams */}
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 20 }}>
+                  <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16, marginBottom: 20 }}>
                     <div>
                       <label style={labelStyle}>HOME TEAM</label>
                       <select value={homeCode} onChange={e => setHomeCode(e.target.value)} style={selectStyle}>
@@ -165,7 +205,7 @@ export default function AdminPage() {
                   </div>
 
                   {/* Kickoff */}
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 20 }}>
+                  <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16, marginBottom: 20 }}>
                     <div>
                       <label style={labelStyle}>KICKOFF DATE (UTC)</label>
                       <input type="date" value={kickoffDate} onChange={e => setKickoffDate(e.target.value)} style={inputStyle} />
