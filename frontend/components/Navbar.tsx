@@ -51,16 +51,14 @@ function WalletWidget() {
 
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-      {/* Balance chip — hidden on mobile */}
-      {!isMobile && (
-        <div style={{
-          background: "#0A1A10", border: "1px solid #2A3D30", borderRadius: 6,
-          padding: "5px 10px", display: "flex", alignItems: "center", gap: 6,
-        }}>
-          <span style={{ fontSize: 10, color: "#8A9E92", fontFamily: "'DM Mono', monospace" }}>{TOKEN_SYMBOL}</span>
-          <span style={{ fontSize: 11, color: "#00FF6A", fontFamily: "'DM Mono', monospace", fontWeight: 500 }}>{balNum}</span>
-        </div>
-      )}
+      {/* Balance chip — compact number on mobile, full label on desktop */}
+      <div style={{
+        background: "#0A1A10", border: "1px solid #2A3D30", borderRadius: 6,
+        padding: "5px 10px", display: "flex", alignItems: "center", gap: 6,
+      }}>
+        {!isMobile && <span style={{ fontSize: 10, color: "#8A9E92", fontFamily: "'DM Mono', monospace" }}>{TOKEN_SYMBOL}</span>}
+        <span style={{ fontSize: 11, color: "#00FF6A", fontFamily: "'DM Mono', monospace", fontWeight: 500 }}>{balNum}</span>
+      </div>
 
       {/* Address + copy */}
       <button
@@ -89,8 +87,8 @@ function WalletWidget() {
         style={{
           background: "none", color: "#8A9E92",
           border: "1px solid #2A3D30", borderRadius: 6,
-          padding: "5px 10px", fontSize: 10,
-          fontFamily: "'DM Mono', monospace", letterSpacing: "0.1em",
+          padding: "5px 8px", fontSize: 10,
+          fontFamily: "'DM Mono', monospace",
           cursor: "pointer",
         }}
       >
@@ -123,8 +121,8 @@ export default function Navbar() {
   ];
 
   const logo = (
-    <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
-      <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
+    <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: isMobile ? 8 : 10 }}>
+      <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
         <rect width="40" height="40" rx="8" fill="#1A3D28"/>
         <path d="M6 30 Q12 28 18 20 Q24 12 34 10" stroke="#00FF6A" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
         <circle cx="34" cy="10" r="3.5" fill="#00FF6A"/>
@@ -132,7 +130,7 @@ export default function Navbar() {
         <line x1="6" y1="34" x2="34" y2="34" stroke="#2A3D30" strokeWidth="0.5"/>
       </svg>
       <div>
-        <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: isMobile ? 18 : 20, letterSpacing: "0.08em", color: "#F0F5F1", lineHeight: 1 }}>CURVEKICK</div>
+        <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: isMobile ? 16 : 20, letterSpacing: "0.08em", color: "#F0F5F1", lineHeight: 1 }}>CURVEKICK</div>
         {!isMobile && <div style={{ fontSize: 8, color: "#00FF6A", letterSpacing: "0.2em" }}>PREDICTION MARKETS</div>}
       </div>
     </Link>
@@ -146,15 +144,16 @@ export default function Navbar() {
           {logo}
           <WalletWidget />
         </div>
-        {/* Bottom row: nav links, scrollable */}
-        <div style={{ display: "flex", overflowX: "auto", borderTop: "1px solid #1A2E22", scrollbarWidth: "none" }}>
+        {/* Bottom row: nav links, equal width so all fit without scrolling */}
+        <div style={{ display: "flex", borderTop: "1px solid #1A2E22" }}>
           {navLinks.map(([href, label]) => (
             <Link key={href} href={href} style={{
-              flexShrink: 0,
-              padding: "10px 16px",
-              fontSize: 10, letterSpacing: "0.14em", fontFamily: "'DM Mono', monospace",
+              flex: 1,
+              padding: "9px 4px",
+              fontSize: 9, letterSpacing: "0.06em", fontFamily: "'DM Mono', monospace",
               color: router.pathname === href ? "#00FF6A" : "#8A9E92",
               textDecoration: "none",
+              textAlign: "center",
               borderBottom: router.pathname === href ? "2px solid #00FF6A" : "2px solid transparent",
               whiteSpace: "nowrap",
             }}>
